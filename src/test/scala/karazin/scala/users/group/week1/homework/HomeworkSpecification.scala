@@ -23,7 +23,7 @@ object BooleanOperatorsSpecification extends Properties("Boolean Operators"):
   property("and") = forAll { (pair: (Boolean, Boolean)) =>
     val (left, right) = pair
     
-    and(left, right) == left && right
+    and(left, right) == (left && right)
   }
 
   property("or") = forAll { (pair: (Boolean, Boolean)) =>
@@ -47,17 +47,18 @@ object FermatNumbersSpecification extends Properties("Fermat Numbers"):
   }
 
   property("fermatNumber") = forAll { (n: Int) =>
-    fermatNumber(n) == Math.pow(2, Math.pow(2, 2)) + 1
+    fermatNumber(n) == BigInt(2).pow(BigInt(2).pow(n).toInt) + 1
   }  
 
 end FermatNumbersSpecification
 
 object LookAndAaSequenceSpecification extends Properties("Look-and-say Sequence"):
+  import LookAndSay._
   import `Look-and-say Sequence`._
   import arbitraries.given Arbitrary[Int]
 
-  property("fermatNumber") = forAll { (n: Int) =>
-    lookAndSaySequenceElement(n) == 42
+  property("lookAndSaySequenceElement") = forAll { (n: Int) =>
+    lookAndSaySequenceElement(n) == lookAndSayTest(n)
   }  
 
 end LookAndAaSequenceSpecification

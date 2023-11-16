@@ -42,27 +42,107 @@ object Homework :
 
     val int = 42
 
-    def not(b: Boolean): Boolean = ??? // here is my greatest solution
+    def not(b: Boolean): Boolean = {
+      if b then false
+      else true
+    } // here is my greatest solution
 
-    def and(left: Boolean, right: Boolean): Boolean = ???
+    def and(left: Boolean, right: Boolean): Boolean = {
+      if (left) {
+        if right then true
+        else false
+      }
+      else false
+    }
 
-    def or(left: Boolean, right: Boolean): Boolean = ???
+    def or(left: Boolean, right: Boolean): Boolean = {
+      if left then true
+      else {
+        if right then true
+        else false
+      }
+    }
 
   end `Boolean Operators`
 
   object `Fermat Numbers` :
 
-    val multiplication: (BigInt, BigInt) => BigInt = ???
+    val multiplication: (BigInt, BigInt) => BigInt = (a, b) => {
 
-    val power: (BigInt, BigInt) => BigInt = ???
+      @tailrec
+      def multRec(a: BigInt, b: BigInt, acc: BigInt): BigInt = {
+        if (b == 0) acc
+        else multRec(a, b - 1, acc + a)
+      }
 
-    val fermatNumber: Int => BigInt = ???
+      if (b > a) {
+        multRec(b, a, 0)
+      } else {
+        multRec(a, b, 0)
+      }
+    }
+
+    val power: (BigInt, BigInt) => BigInt = (a, b) => {
+
+      @tailrec
+      def powerRec(a: BigInt, b: BigInt, acc: BigInt): BigInt = {
+        if (b == 0) acc
+        else powerRec(a, b - 1, multiplication(a, acc))
+      }
+
+      powerRec(a, b, 1)
+    }
+
+    val fermatNumber: Int => BigInt = a => {
+      power(2, power(2, a)) + 1
+    }
 
   end `Fermat Numbers`
 
   object `Look-and-say Sequence` :
-    val lookAndSaySequenceElement: Int => BigInt = ???
+    val lookAndSaySequenceElement: Int => BigInt = n => {
+
+      @tailrec
+      def lookAndSayHelper(s: String, acc: String): String = {
+        if (s.isEmpty) acc
+        else {
+          val (lead, tail) = s.span(_ == s.head)
+          lookAndSayHelper(tail, acc + lead.length + lead.head)
+        }
+      }
+
+      BigInt(lookAndSayHelper(n.toString, ""))
+    }
 
   end `Look-and-say Sequence`
+
+  object LookAndSay {
+
+    val lookAndSayTest: Int => BigInt = n => {
+      BigInt(lookandsay(n.toString))
+    }
+
+    loop(10, "1")
+
+    @tailrec
+    private def loop(n: Int, num: String): Unit = {
+      if (n <= 0) () else loop(n - 1, lookandsay(num))
+    }
+
+    private def lookandsay(number: String): String = {
+      val result = new StringBuilder
+
+      @tailrec
+      def loop(numberString: String, repeat: Char, times: Int): String =
+        if (numberString.isEmpty) result.toString()
+        else if (numberString.head != repeat) {
+          result.append(times).append(repeat)
+          loop(numberString.tail, numberString.head, 1)
+        } else loop(numberString.tail, numberString.head, times + 1)
+
+      loop(number.tail + " ", number.head, 1)
+    }
+
+  }
 
 end Homework
