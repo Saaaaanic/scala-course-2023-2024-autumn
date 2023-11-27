@@ -53,7 +53,7 @@ object FermatNumbersSpecification extends Properties("Fermat Numbers"):
 end FermatNumbersSpecification
 
 object LookAndAaSequenceSpecification extends Properties("Look-and-say Sequence"):
-  import LookAndSay._
+  import karazin.scala.users.group.week1.utils.LookAndSay._
   import `Look-and-say Sequence`._
   import arbitraries.given Arbitrary[Int]
 

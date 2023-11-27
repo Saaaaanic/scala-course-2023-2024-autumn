@@ -40,27 +40,19 @@ object Homework :
 
   object `Boolean Operators` :
 
-    val int = 42
-
     def not(b: Boolean): Boolean = {
       if b then false
       else true
     } // here is my greatest solution
 
     def and(left: Boolean, right: Boolean): Boolean = {
-      if (left) {
-        if right then true
-        else false
-      }
+      if (left) right
       else false
     }
 
     def or(left: Boolean, right: Boolean): Boolean = {
-      if left then true
-      else {
-        if right then true
-        else false
-      }
+      if (left) true
+      else right
     }
 
   end `Boolean Operators`
@@ -115,34 +107,5 @@ object Homework :
     }
 
   end `Look-and-say Sequence`
-
-  object LookAndSay {
-
-    val lookAndSayTest: Int => BigInt = n => {
-      BigInt(lookandsay(n.toString))
-    }
-
-    loop(10, "1")
-
-    @tailrec
-    private def loop(n: Int, num: String): Unit = {
-      if (n <= 0) () else loop(n - 1, lookandsay(num))
-    }
-
-    private def lookandsay(number: String): String = {
-      val result = new StringBuilder
-
-      @tailrec
-      def loop(numberString: String, repeat: Char, times: Int): String =
-        if (numberString.isEmpty) result.toString()
-        else if (numberString.head != repeat) {
-          result.append(times).append(repeat)
-          loop(numberString.tail, numberString.head, 1)
-        } else loop(numberString.tail, numberString.head, times + 1)
-
-      loop(number.tail + " ", number.head, 1)
-    }
-
-  }
 
 end Homework
