@@ -45,12 +45,12 @@ object Homework :
       else true
     } // here is my greatest solution
 
-    def and(left: Boolean, right: Boolean): Boolean = {
+    def and(left: Boolean, right: => Boolean): Boolean = {
       if (left) right
       else false
     }
 
-    def or(left: Boolean, right: Boolean): Boolean = {
+    def or(left: Boolean, right: => Boolean): Boolean = {
       if (left) true
       else right
     }
