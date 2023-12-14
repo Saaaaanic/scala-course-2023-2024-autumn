@@ -30,7 +30,15 @@ object BooleanOperatorsSpecification extends Properties("Boolean Operators"):
     val (left, right) = pair
     
     or(left, right) == left || right
-  }   
+  }
+
+  property("eagerAnd") = forAll { (right: Boolean) =>
+    and(false, throw new Exception("And is right operand")) == (false && right)
+  }
+
+  property("eagerOr") = forAll { (right: Boolean) =>
+    or(true, throw new Exception("Or in right operand")) == (true || right)
+  }
 
 end BooleanOperatorsSpecification
 
