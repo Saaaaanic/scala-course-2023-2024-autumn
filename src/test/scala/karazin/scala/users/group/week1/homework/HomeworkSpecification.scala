@@ -32,12 +32,12 @@ object BooleanOperatorsSpecification extends Properties("Boolean Operators"):
     or(left, right) == left || right
   }
 
-  property("eagerAnd") = forAll { (right: Boolean) =>
-    and(false, throw new Exception("And is right operand")) == (false && right)
+  property("eagerAnd") = propBoolean {
+    and(false, throw new Exception("And is right operand")) == (false && true)
   }
 
-  property("eagerOr") = forAll { (right: Boolean) =>
-    or(true, throw new Exception("Or in right operand")) == (true || right)
+  property("eagerOr") = propBoolean {
+    or(true, throw new Exception("Or in right operand")) == (true || false)
   }
 
 end BooleanOperatorsSpecification
