@@ -7,6 +7,10 @@ import Homework.{Nat, *}
 
 object HomeworkSpecification extends Properties("Homework"):
 
+  include(ZeroSpecification)
+  include(SuccSpecification)
+  include(NatSpecification)
+
 end HomeworkSpecification
 
 
@@ -41,7 +45,7 @@ object SuccSpecification extends Properties("Succ"):
     n.successor - n == Zero.fromInt(1)
   }
 
-  property("successor") = forAll { (n: Succ) =>
+  property("predecessor") = forAll { (n: Succ) =>
     n - n.predecessor == Zero.fromInt(1)
   }
 

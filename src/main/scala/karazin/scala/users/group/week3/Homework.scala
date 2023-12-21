@@ -17,7 +17,7 @@ object Homework:
 
     // Optional task
     def fromInt(int: Int): Nat =
-      if int < 0 then throw new Exception("Can Nat be negative? No")
+      if int < 0 then throw Exception("Can Nat be negative? No")
       else if int == 0 then Zero
       else new Succ(fromInt(int - 1))
   
@@ -26,7 +26,7 @@ object Homework:
   type Zero = Zero.type 
   object Zero extends Nat:
     def isZero: Boolean = true
-    def predecessor: Nat = throw new Exception("0 doesn't have a predecessor")
+    def predecessor: Nat = throw Exception("0 doesn't have a predecessor")
     
     infix def +(that: Nat): Nat = that
     
@@ -37,6 +37,8 @@ object Homework:
 
     override def toString: String = "Zero"
     override def equals(obj: Any): Boolean = obj.isInstanceOf[Zero.type]
+
+    override def hashCode(): Int = super.hashCode()
 
   class Succ(n: Nat) extends Nat:
     def isZero: Boolean = false
@@ -55,3 +57,4 @@ object Homework:
       case that: Succ => n == that.predecessor
       case _ => false
 
+    override def hashCode(): Int = super.hashCode()
