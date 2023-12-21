@@ -5,7 +5,9 @@ import org.scalacheck.*
 import Prop.{forAll, propBoolean, throws}
 import karazin.scala.users.group.week2.homework.arbitraries
 import Homework.{Rational, *}
+import karazin.scala.users.group.week2.arbitraries.restricted.{PositiveInteger, Zero}
 import utils.*
+import scala.language.implicitConversions
 
 object HomeworkSpecification extends Properties("Homework"):
   import arbitraries.{given Arbitrary[Int], given Arbitrary[Rational]}
@@ -65,14 +67,23 @@ object HomeworkSpecification extends Properties("Homework"):
     left * right == Rational(left.numer * right.numer, left.denom * right.denom)
   }
 
-  property("division") = forAll { (left: Rational, numer: Int, denom: Int) =>
-    val right = Rational(if numer == 0 then 1 else numer, abs(denom) + 1)
+  property("division") = forAll { (left: Rational, numer: PositiveInteger, denom: Int) =>
+    val right = Rational(numer, abs(denom) + 1)
+    left / right == Rational(left.numer * right.denom * signum(right.numer), left.denom * abs(right.numer))
+  }
+
+  property("division numer 0") = forAll { (left: Rational, denom: Int) =>
+    val right = Rational(1, abs(denom) + 1)
     left / right == Rational(left.numer * right.denom * signum(right.numer), left.denom * abs(right.numer))
   }
 
   property("division by zero") = forAll { (left: Rational, int: Int) =>
     val right = Rational(int, 1)
     left / right == Rational(left.numer * right.denom * signum(right.numer), left.denom * abs(right.numer))
+  }
+
+  property("equals hash code contract") = forAll { (left: Rational, right: Rational) ⇒
+    (left == right) == (left.hashCode() == right.hashCode())
   }
 
 end HomeworkSpecification

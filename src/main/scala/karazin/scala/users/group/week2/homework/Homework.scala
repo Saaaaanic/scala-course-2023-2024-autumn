@@ -72,6 +72,8 @@ object Homework:
             this.denom == that.denom
         case _ => false
 
+    override def hashCode(): Int = super.hashCode()
+
   end Rational
 
 end Homework
