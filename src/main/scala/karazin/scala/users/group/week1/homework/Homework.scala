@@ -40,28 +40,71 @@ object Homework :
 
   object `Boolean Operators` :
 
-    val int = 42
+    def not(b: Boolean): Boolean = {
+      if b then false
+      else true
+    } // here is my greatest solution
 
-    def not(b: Boolean): Boolean = ??? // here is my greatest solution
+    def and(left: Boolean, right: => Boolean): Boolean = {
+      if (left) right
+      else false
+    }
 
-    def and(left: Boolean, right: Boolean): Boolean = ???
-
-    def or(left: Boolean, right: Boolean): Boolean = ???
+    def or(left: Boolean, right: => Boolean): Boolean = {
+      if (left) true
+      else right
+    }
 
   end `Boolean Operators`
 
   object `Fermat Numbers` :
 
-    val multiplication: (BigInt, BigInt) => BigInt = ???
+    val multiplication: (BigInt, BigInt) => BigInt = (a, b) => {
 
-    val power: (BigInt, BigInt) => BigInt = ???
+      @tailrec
+      def multRec(a: BigInt, b: BigInt, acc: BigInt): BigInt = {
+        if (b == 0) acc
+        else multRec(a, b - 1, acc + a)
+      }
 
-    val fermatNumber: Int => BigInt = ???
+      if (b > a) {
+        multRec(b, a, 0)
+      } else {
+        multRec(a, b, 0)
+      }
+    }
+
+    val power: (BigInt, BigInt) => BigInt = (a, b) => {
+
+      @tailrec
+      def powerRec(a: BigInt, b: BigInt, acc: BigInt): BigInt = {
+        if (b == 0) acc
+        else powerRec(a, b - 1, multiplication(a, acc))
+      }
+
+      powerRec(a, b, 1)
+    }
+
+    val fermatNumber: Int => BigInt = a => {
+      power(2, power(2, a)) + 1
+    }
 
   end `Fermat Numbers`
 
   object `Look-and-say Sequence` :
-    val lookAndSaySequenceElement: Int => BigInt = ???
+    val lookAndSaySequenceElement: Int => BigInt = n => {
+
+      @tailrec
+      def lookAndSayHelper(s: String, acc: String): String = {
+        if (s.isEmpty) acc
+        else {
+          val (lead, tail) = s.span(_ == s.head)
+          lookAndSayHelper(tail, acc + lead.length + lead.head)
+        }
+      }
+
+      BigInt(lookAndSayHelper(n.toString, ""))
+    }
 
   end `Look-and-say Sequence`
 
